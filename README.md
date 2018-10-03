@@ -8,24 +8,24 @@ Terraform that deploys the GoCron project https://github.com/jsirianni/gocron
 ## Create Project
 ##### export variables
 ```
-export GCP_PROJECT=projectid
-export GCP_BILLING=billingid
+export GOOGLE_PROJECT=projectid
+export GOOGLE_BILLING=billingid
 ```
 
 ##### create the project
 ```
-gcloud projects create ${GCP_PROJECT}
+gcloud projects create ${GOOGLE_PROJECT}
 ```
 
 ##### switch to the new project
 
 ```
-gcloud config set project ${GCP_PROJECT}
+gcloud config set project ${GOOGLE_PROJECT}
 ```
 
 ##### Enable billing
 ```
-gcloud beta billing projects link ${GCP_PROJECT} --billing-account ${GCP_BILLING}
+gcloud beta billing projects link ${GOOGLE_PROJECT} --billing-account ${GOOGLE_BILLING}
 ```
 
 ##### Enable APIs
