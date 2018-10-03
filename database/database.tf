@@ -1,7 +1,3 @@
-variable "expiration_time" { default = "2028-11-15T16:19:00.094Z" }
-variable "dbversion" { default = "POSTGRES_9_6" }
-
-
 // create the database instance
 //
 resource "google_sql_database_instance" "gocron" {
