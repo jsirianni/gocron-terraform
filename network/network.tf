@@ -1,12 +1,12 @@
 resource "google_compute_network" "gocron" {
-  name    = "${var.network_name}"
+  name    = "${var.network_name}-${terraform.workspace}"
   project = "${var.project}"
   auto_create_subnetworks = "false"
 }
 
 
 resource "google_compute_subnetwork" "gocron" {
-  name          = "${var.subnetwork_name}"
+  name          = "${var.subnetwork_name}-${terraform.workspace}"
   project       = "${var.project}"
   ip_cidr_range = "${var.cidr}"
   network       = "${google_compute_network.gocron.self_link}"
@@ -15,7 +15,7 @@ resource "google_compute_subnetwork" "gocron" {
 
 
 resource "google_compute_firewall" "frontend" {
-  name    = "frontend-firewall"
+  name    = "front-firewall-${terraform.workspace}"
   project = "${var.project}"
   network = "${google_compute_network.gocron.name}"
 
@@ -29,7 +29,7 @@ resource "google_compute_firewall" "frontend" {
 
 
 resource "google_compute_firewall" "ssh" {
-  name    = "ssh"
+  name    = "ssh-${terraform.workspace}"
   project = "${var.project}"
   network = "${google_compute_network.gocron.name}"
 
