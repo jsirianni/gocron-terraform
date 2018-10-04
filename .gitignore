@@ -9,3 +9,4 @@
 *.tfvars
 
 secure.tf
+secure.tfvars

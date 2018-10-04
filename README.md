@@ -1,5 +1,3 @@
-A work in progress
-
 # GoCron Terraform
 Terraform that deploys the GoCron project https://github.com/jsirianni/gocron
 
@@ -8,24 +6,29 @@ Terraform that deploys the GoCron project https://github.com/jsirianni/gocron
 ## Create Project
 ##### export variables
 ```
-export GCP_PROJECT=projectid
-export GCP_BILLING=billingid
+# your project id to be created
+export GOOGLE_PROJECT=projectid
+
+# your existing billingid
+export GOOGLE_BILLING=billingid
+
+# your desired workspace name (prod, dev, qa, etc)
+export GOOGLE_WORKSPACE=workspace
 ```
 
 ##### create the project
 ```
-gcloud projects create ${GCP_PROJECT}
+gcloud projects create ${GOOGLE_PROJECT}
 ```
 
 ##### switch to the new project
-
 ```
-gcloud config set project ${GCP_PROJECT}
+gcloud config set project ${GOOGLE_PROJECT}
 ```
 
 ##### Enable billing
 ```
-gcloud beta billing projects link ${GCP_PROJECT} --billing-account ${GCP_BILLING}
+gcloud beta billing projects link ${GOOGLE_PROJECT} --billing-account ${GOOGLE_BILLING}
 ```
 
 ##### Enable APIs
@@ -37,15 +40,26 @@ gcloud services enable compute.googleapis.com
 gcloud services enable servicenetworking.googleapis.com
 ```
 
+## Configure terraform.tfvars
+Variables that should not be defined in git, must first be manually defined. See `variables.tf`
+for variable descriptions.
+```
+# edit terraform.tfvars
+cp terraform.tfvars.example terraform.tfvars
+vi terraform.tfvars
+```
+
+
 ## Deploy
 ```
-terraform init -var-file="secure.tfvars"
-terraform plan -var-file="secure.tfvars"
-terraform apply -var-file="secure.tfvars"
+terraform init"
+terraform workspace select ${GOOGLE_WORKSPACE} || terraform workspace new ${GOOGLE_WORKSPACE}
+terraform plan"
+terraform apply"
 ```
 
 ## Destroy
 Terraform will cleanup all resources within the project, however, the project will remain as it was not created by Terraform
 ```
-terraform destroy -var-file="secure.tfvars"
+terraform destroy"
 ```

@@ -1,9 +1,3 @@
-
-
-variable "expiration_time" { default = "2028-11-15T16:19:00.094Z" }
-variable "dbversion" { default = "POSTGRES_9_6" }
-
-
 // create the database instance
 //
 resource "google_sql_database_instance" "gocron" {
@@ -42,8 +36,4 @@ resource "google_sql_user" "users" {
     project  = "${var.project}"
     instance = "${google_sql_database_instance.gocron.name}"
     password = "${var.dbpass}"
-    depends_on = [
-        "google_sql_database.gocron",
-        "google_sql_database_instance.gocron"
-    ]
 }
